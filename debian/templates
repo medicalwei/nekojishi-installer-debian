@@ -1,0 +1,8 @@
+Template: nekojishi-installer/variant
+Type: select
+_Choices: Standard, NSFW
+_Description: Choose a variant you would like to play
+ Note that there are sexual contents in NSFW version, and you must be 18
+ years of age or older (or adult by definition of local jurisdiction) to
+ choose NSFW variant.
+Default: Standard

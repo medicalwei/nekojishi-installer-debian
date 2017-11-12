@@ -1,0 +1,25 @@
+Source: nekojishi-installer
+Section: games
+Priority: extra
+Maintainer: Yao Wei (魏銘廷) <mwei@lxde.org>
+Build-Depends: debhelper (>=10)
+Standards-Version: 4.1.1
+Homepage: https://nekojishi.tw
+
+Package: nekojishi-installer
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${shlibs:Depends}, renpy
+Description: Interactive visual novel with furries and Taiwanese cultures
+ Nekojishi is a gay romance visual novel including Taiwan folk religion,
+ aboriginal culture and anthropomorphic characters.
+ .
+ This package will download Nekojishi (Standard or NSFW) version on the
+ website.
+ .
+ WARNING: 
+ * By installing this package, you agree that you do not use Nekojishi
+   contents for commercial use.
+ * There are sexual contents in NSFW version, and you must be 18 years
+   of age or older (or adult by definition of local jurisdiction) to choose
+   NSFW version.

@@ -1,0 +1,39 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the nekojishi-installer package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nekojishi-installer\n"
+"Report-Msgid-Bugs-To: nekojishi-installer@packages.debian.org\n"
+"POT-Creation-Date: 2017-11-13 01:22+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: select
+#. Choices
+#: ../templates:1001
+msgid "Standard, NSFW"
+msgstr ""
+
+#. Type: select
+#. Description
+#: ../templates:1002
+msgid "Choose a variant you would like to play"
+msgstr ""
+
+#. Type: select
+#. Description
+#: ../templates:1002
+msgid ""
+"Note that there are sexual contents in NSFW version, and you must be 18 "
+"years of age or older (or adult by definition of local jurisdiction) to "
+"choose NSFW variant."
+msgstr ""

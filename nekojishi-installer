@@ -1,0 +1,113 @@
+#!/bin/sh
+
+set -e
+
+UPSTREAM_DOWNLOAD_PAGE=https://nekojishi.tw/down.html
+UPSTREAM_DOWNLOAD_URL='https://nekojishi.tw/demo/Nekojishi_${VARIANT}${VERSION}-pc.zip'
+FILENAME='Nekojishi_${VARIANT}${VERSION}-pc.zip'
+
+TEMP_DIR=/var/cache/nekojishi-installer/
+INSTALL_DIR=/usr/share/games/nekojishi/
+
+die_hard() {
+	echo "ERROR: $1" >&2
+	exit 1
+}
+
+[ `whoami` = "root" ] || die_hard "must be root"
+
+show_usage() {
+	echo "Usage:"
+	echo "  nekojishi-installer --install"
+	echo "  nekojishi-installer --install --nsfw"
+	echo "  nekojishi-installer --install --file=[Nekojishi.zip]"
+	echo "  nekojishi-installer --uninstall"
+	echo "  nekojishi-installer --status"
+	exit 1
+}
+
+getopt_temp=`getopt -o iu --long install,uninstall,nsfw,file: -n 'nekojishi-installer' -- "$@"` || show_usage
+
+eval set -- "$getopt_temp" || show_usage
+
+ACTION=none
+VARIANT=Standard # Standard, Limited
+FILE=
+
+while [ true ]
+do
+	case "$1" in
+		-i|--install)
+			ACTION="--install"
+			shift
+			;;
+		-u|--uninstall)
+			ACTION="--uninstall"
+			shift
+			;;
+		--nsfw)
+			VARIANT=Limited
+			shift
+			;;
+		--file)
+			shift
+			FILE=$1
+			shift
+			;;
+		--)
+			shift
+			break
+			;;
+		*)
+			echo "Internal error!" >&2
+			exit 1
+			;;
+	esac
+done
+
+get_upstream_version() {
+	VERSION=$(wget -qO- $UPSTREAM_DOWNLOAD_PAGE | awk 'match($0, /Nekojishi_Standard(.+)-pc\.zip/, ary){print ary[1]}')
+}
+
+download() {
+	url=$(eval echo $UPSTREAM_DOWNLOAD_URL)
+	wget -O $FILE $url
+}
+
+extract() {
+	echo "Extracting files from $FILE"
+	unzip -j $FILE "Nekojishi-pc/game/*" "Nekojishi-pc/ch-log*" -d $INSTALL_DIR
+}
+
+uninstall() {
+	rm -f ${INSTALL_DIR}*
+}
+
+clean_up() {
+	rm -f ${TEMP_DIR}*
+}
+
+case "$ACTION" in
+
+	--install)
+		get_upstream_version
+		echo "Upstream Version: $VERSION"
+		if [ -z $FILE ]; then
+			filename=$(eval echo $FILENAME)
+			FILE=$TEMP_DIR$filename
+			download
+		fi
+		extract
+		;;
+
+	--uninstall)
+		uninstall
+		;;
+
+	*)
+		show_usage
+		;;
+
+esac
+
+clean_up

@@ -1,0 +1,32 @@
+#!/bin/sh
+
+set -e
+
+. /usr/share/debconf/confmodule
+
+case "$1" in
+    configure)
+    	db_input high nekojishi-installer/variant
+	db_go
+
+    	db_get nekojishi-installer/variant
+	if [ "$RET" = "NSFW" ]; then
+		nekojishi-installer --install --nsfw
+	else
+		nekojishi-installer --install
+	fi
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+#DEBHELPER#
+
+exit 0
+
