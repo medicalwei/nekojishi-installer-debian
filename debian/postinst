@@ -2,10 +2,22 @@
 
 set -e
 
+donate_info() {
+	# Users may get the package without going to the website, so
+	# displaying this message is important
+	echo ""
+	echo "If you like this game, please consider buying (donating) the game and"
+	echo "merchandises at:"
+	echo "https://store.nekojishi.tw/en/shop/"
+	echo ""
+}
+
 . /usr/share/debconf/confmodule
 
 case "$1" in
     configure)
+    	donate_info
+
     	db_input high nekojishi-installer/variant
 	db_go
 
