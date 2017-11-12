@@ -4,7 +4,8 @@ Priority: extra
 Maintainer: Yao Wei (魏銘廷) <mwei@lxde.org>
 Build-Depends: debhelper (>=10)
 Standards-Version: 4.1.1
-Homepage: https://nekojishi.tw
+Homepage: https://github.com/medicalwei/nekojishi-installer-debian
+VCS-Git: https://github.com/medicalwei/nekojishi-installer-debian.git
 
 Package: nekojishi-installer
 Architecture: any
