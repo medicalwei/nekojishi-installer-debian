@@ -64,8 +64,8 @@ get_upstream_version() {
 }
 
 get_local_version() {
-	LOCAL_VERSION=$(cat $INSTALL_DIR/version 2>/dev/null)
-	LOCAL_VARIANT=$(cat $INSTALL_DIR/variant 2>/dev/null)
+	LOCAL_VERSION=$(cat $INSTALL_DIR/version 2>/dev/null || true)
+	LOCAL_VARIANT=$(cat $INSTALL_DIR/variant 2>/dev/null || true)
 }
 
 download() {
@@ -97,7 +97,7 @@ case "$ACTION" in
 	--install)
 		get_upstream_version
 		get_local_version
-		if [ $VERSION = $LOCAL_VERSION ] && [ $VARIANT = $LOCAL_VARIANT ]; then
+		if [ "$VERSION" = "$LOCAL_VERSION" ] && [ "$VARIANT" = "$LOCAL_VARIANT" ]; then
 			echo "Exact version and variant found."
 			clean_up
 			exit 0
