@@ -64,8 +64,8 @@ get_upstream_version() {
 }
 
 get_local_version() {
-	LOCAL_VERSION=$(cat $INSTALL_DIR/version 2>/dev/null || true)
-	LOCAL_VARIANT=$(cat $INSTALL_DIR/variant 2>/dev/null || true)
+	LOCAL_VERSION=$(cat ${INSTALL_DIR}version 2>/dev/null || true)
+	LOCAL_VARIANT=$(cat ${INSTALL_DIR}variant 2>/dev/null || true)
 }
 
 download() {
@@ -76,12 +76,12 @@ download() {
 extract() {
 	mkdir -p $INSTALL_DIR/tl/None
 	unzip -j $FILE "Nekojishi-pc/game/*.rpa" "Nekojishi-pc/ch-log*" -d $INSTALL_DIR
-	unzip -j $FILE "Nekojishi-pc/game/tl/None/*" -d $INSTALL_DIR/tl/None
+	unzip -j $FILE "Nekojishi-pc/game/tl/None/*" -d ${INSTALL_DIR}tl/None
 }
 
 mark_version() {
-	echo $VERSION > $INSTALL_DIR/version
-	echo $VARIANT > $INSTALL_DIR/variant
+	echo $VERSION > ${INSTALL_DIR}version
+	echo $VARIANT > ${INSTALL_DIR}variant
 }
 
 uninstall() {
