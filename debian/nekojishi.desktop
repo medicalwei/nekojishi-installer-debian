@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Nekojishi
+Comment=Interactive visual novel with furries and Taiwanese cultures
+Exec=/usr/games/nekojishi
+Categories=Game
+Name[zh_TW]=家有大貓
+Name[ja_JP]=家有大猫 Nekojishi

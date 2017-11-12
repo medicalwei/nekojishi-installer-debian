@@ -20,13 +20,12 @@ show_usage() {
 	echo "Usage:"
 	echo "  nekojishi-installer --install"
 	echo "  nekojishi-installer --install --nsfw"
-	echo "  nekojishi-installer --install --file=[Nekojishi.zip]"
 	echo "  nekojishi-installer --uninstall"
 	echo "  nekojishi-installer --status"
 	exit 1
 }
 
-getopt_temp=`getopt -o iu --long install,uninstall,nsfw,file: -n 'nekojishi-installer' -- "$@"` || show_usage
+getopt_temp=`getopt -o iu --long install,uninstall,nsfw -n 'nekojishi-installer' -- "$@"` || show_usage
 
 eval set -- "$getopt_temp" || show_usage
 
@@ -49,11 +48,6 @@ do
 			VARIANT=Limited
 			shift
 			;;
-		--file)
-			shift
-			FILE=$1
-			shift
-			;;
 		--)
 			shift
 			break
@@ -69,14 +63,25 @@ get_upstream_version() {
 	VERSION=$(wget -qO- $UPSTREAM_DOWNLOAD_PAGE | awk 'match($0, /Nekojishi_Standard(.+)-pc\.zip/, ary){print ary[1]}')
 }
 
+get_local_version() {
+	LOCAL_VERSION=$(cat $INSTALL_DIR/version 2>/dev/null)
+	LOCAL_VARIANT=$(cat $INSTALL_DIR/variant 2>/dev/null)
+}
+
 download() {
 	url=$(eval echo $UPSTREAM_DOWNLOAD_URL)
 	wget -O $FILE $url
 }
 
 extract() {
-	echo "Extracting files from $FILE"
-	unzip -j $FILE "Nekojishi-pc/game/*" "Nekojishi-pc/ch-log*" -d $INSTALL_DIR
+	mkdir -p $INSTALL_DIR/tl/None
+	unzip -j $FILE "Nekojishi-pc/game/*.rpa" "Nekojishi-pc/ch-log*" -d $INSTALL_DIR
+	unzip -j $FILE "Nekojishi-pc/game/tl/None/*" -d $INSTALL_DIR/tl/None
+}
+
+mark_version() {
+	echo $VERSION > $INSTALL_DIR/version
+	echo $VARIANT > $INSTALL_DIR/variant
 }
 
 uninstall() {
@@ -91,13 +96,17 @@ case "$ACTION" in
 
 	--install)
 		get_upstream_version
-		echo "Upstream Version: $VERSION"
-		if [ -z $FILE ]; then
-			filename=$(eval echo $FILENAME)
-			FILE=$TEMP_DIR$filename
-			download
+		get_local_version
+		if [ $VERSION = $LOCAL_VERSION ] && [ $VARIANT = $LOCAL_VARIANT ]; then
+			echo "Exact version and variant found."
+			clean_up
+			exit 0
 		fi
+		filename=$(eval echo $FILENAME)
+		FILE=$TEMP_DIR$filename
+		download
 		extract
+		mark_version
 		;;
 
 	--uninstall)

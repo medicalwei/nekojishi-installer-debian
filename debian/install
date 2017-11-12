@@ -1,2 +1,3 @@
 nekojishi-installer usr/sbin
 nekojishi usr/games
+debian/nekojishi.desktop usr/share/applications
