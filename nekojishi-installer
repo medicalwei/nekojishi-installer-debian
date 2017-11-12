@@ -85,7 +85,7 @@ mark_version() {
 }
 
 uninstall() {
-	rm -f ${INSTALL_DIR}*
+	rm -rf ${INSTALL_DIR}*
 }
 
 clean_up() {
