@@ -6,7 +6,7 @@ donate_info() {
 	# Users may get the package without going to the website, so
 	# displaying this message is important
 	echo ""
-	echo "If you like this game, please consider buying (donating) the game and"
+	echo "If you like this game, please consider buying (donating) the"
 	echo "merchandises at:"
 	echo "https://store.nekojishi.tw/en/shop/"
 	echo ""
@@ -21,7 +21,7 @@ case "$1" in
     	db_input high nekojishi-installer/variant
 	db_go
 
-    	db_get nekojishi-installer/variant
+    	db_get nekojishi-installer/variant || true
 	if [ "$RET" = "NSFW" ]; then
 		nekojishi-installer --install --nsfw
 	else
