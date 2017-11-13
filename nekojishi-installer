@@ -21,7 +21,6 @@ show_usage() {
 	echo "  nekojishi-installer --install"
 	echo "  nekojishi-installer --install --nsfw"
 	echo "  nekojishi-installer --uninstall"
-	echo "  nekojishi-installer --status"
 	exit 1
 }
 
